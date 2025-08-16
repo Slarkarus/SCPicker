@@ -5,8 +5,8 @@
 #include "controller.hpp"
 
 int main() {
-    Controller controller;
-    Viewer viewer;
+    Controller* controller = new Controller();
+    Viewer* viewer = new Viewer();
     Gamedata gamedata("test_map.scpac");
 
     Engine* engine = Engine::get_instance(controller, gamedata, viewer);
