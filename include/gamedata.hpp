@@ -9,7 +9,7 @@ enum class Tile
 {
     Wall,
     Empty,
-    Exit,
+    Exit
 };
 
 class Gamedata;
@@ -60,16 +60,17 @@ public:
 class Gamedata
 {
 private:
-    std::vector<std::vector<Tile>> tiles;
+    std::vector<std::vector<Tile>> tiles_;
 
-    std::vector<Entity> enemies;
-    Player player;
-    std::vector<Orb> orbs;
+    std::vector<Entity> enemies_;
+    Player* player_;
+    std::vector<Orb> orbs_;
 
-    std::map<std::string, bool> input;
+    std::map<std::string, bool> input_;
 
 public:
     std::vector<std::vector<Tile>> get_map();
+
     std::vector<Entity> get_enemies();
     Player get_player();
     std::vector<Orb> get_orbs();
@@ -78,7 +79,8 @@ public:
 
     void step();
 
-    Gamedata();
+    Gamedata(std::string filename);
 };
+
 
 #endif
