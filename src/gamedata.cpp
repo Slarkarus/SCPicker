@@ -1,10 +1,15 @@
 #include "gamedata.hpp"
+#include "entity/entity.hpp"
+#include "entity/orb.hpp"
+#include "entity/player.hpp"
+#include "entity/scp_939.hpp"
+
 #include <fstream>
 #include <vector>
 
 Gamedata::Gamedata(std::string filename)
 {
-    std::string filepath = "resources/maps/" +  filename;
+    std::string filepath = "resources/maps/" + filename;
     std::ifstream fin(filepath);
     if (!fin)
         throw std::runtime_error("Unable to open " + filepath);
@@ -35,13 +40,13 @@ Gamedata::Gamedata(std::string filename)
                 tiles_[i][j] = Tile::Exit;
                 break;
             case 'P':
-                player_ = new Player(i + 0.5, j + 0.5);
+                player_ = new ent::Player(i + 0.5, j + 0.5);
                 break;
             case 'E':
-                enemies_.push_back(SCP_939(i+0.5, j+0.5));
+                enemies_.push_back(new ent::SCP_939(i + 0.5, j + 0.5));
                 break;
             case '.':
-                orbs_.push_back(Orb(i+0.5, j+0.5));
+                orbs_.push_back(new ent::Orb(i + 0.5, j + 0.5));
                 break;
             default:
                 throw std::runtime_error("Unknown map symbol\n");
@@ -52,18 +57,29 @@ Gamedata::Gamedata(std::string filename)
 }
 
 // Методы Entity
-std::pair<double, double> Entity::get_pos() { return {x_pos_, y_pos_}; }
-void Entity::step(Gamedata &gamedata) {}
+std::pair<double, double> ent::Entity::get_pos() { return {x_pos_, y_pos_}; }
+void ent::Entity::step(Gamedata &gamedata) {}
 
 // Методы наследников
-void SCP_939::step(Gamedata &gamedata) {}
-void Player::step(Gamedata &gamedata) {}
-void Orb::step(Gamedata &gamedata) {}
+void ent::SCP_939::step(Gamedata &gamedata) {}
+void ent::Player::step(Gamedata &gamedata) {}
+void ent::Orb::step(Gamedata &gamedata) {}
 
 // Методы Gamedata
 std::vector<std::vector<Tile>> Gamedata::get_map() { return tiles_; }
-std::vector<Entity> Gamedata::get_enemies() { return enemies_; }
-Player Gamedata::get_player() { return *player_; }
-std::vector<Orb> Gamedata::get_orbs() { return orbs_; }
+std::vector<ent::Entity *> Gamedata::get_enemies() { return enemies_; }
+ent::Player *Gamedata::get_player() { return player_; }
+std::vector<ent::Orb *> Gamedata::get_orbs() { return orbs_; }
 void Gamedata::update_input(std::string input_name, bool input_value) { input_[input_name] = input_value; }
 void Gamedata::step() {}
+
+Gamedata::~Gamedata()
+{
+    for (auto orb : orbs_)
+        delete orb;
+
+    delete player_;
+    
+    for (auto enemy : enemies_)
+        delete enemy;
+}

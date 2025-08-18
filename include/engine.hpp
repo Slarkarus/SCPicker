@@ -43,6 +43,4 @@ public:
     void run();
 };
 
-
-
 #endif
