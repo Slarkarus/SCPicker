@@ -6,7 +6,6 @@
 
 #include <fstream>
 #include <vector>
-
 Gamedata::Gamedata(std::string filename)
 {
     std::string filepath = "resources/maps/" + filename;
@@ -75,11 +74,11 @@ void Gamedata::step() {}
 
 Gamedata::~Gamedata()
 {
-    for (auto orb : orbs_)
+    for (ent::Orb *orb : orbs_)
         delete orb;
 
     delete player_;
-    
-    for (auto enemy : enemies_)
+
+    for (ent::Entity *enemy : enemies_)
         delete enemy;
 }

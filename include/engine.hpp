@@ -18,11 +18,11 @@ class Engine
 {
 private:
     Controller *controller_;
-    Gamedata gamedata_;
+    Gamedata *gamedata_;
     Viewer* viewer_;
     Scene current_scene_;
 
-    Engine(Controller *controller, Gamedata gamedata, Viewer *viewer) :
+    Engine(Controller *controller, Gamedata *gamedata, Viewer *viewer) :
         controller_(controller), gamedata_(gamedata), viewer_(viewer), current_scene_(Scene::Menu) {
             SetTargetFPS(60);
         }
@@ -33,7 +33,7 @@ public:
     Engine(Engine &other) = delete;
     void operator=(const Engine &) = delete;
 
-    static Engine* get_instance(Controller *controller, Gamedata gamedata, Viewer* viewer) {
+    static Engine* get_instance(Controller *controller, Gamedata *gamedata, Viewer* viewer) {
         if(engine_==nullptr){
             engine_ = new Engine(controller, gamedata, viewer);
         }
@@ -41,6 +41,8 @@ public:
     }
 
     void run();
+
+    ~Engine();
 };
 
 #endif

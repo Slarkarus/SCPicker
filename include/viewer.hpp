@@ -12,9 +12,10 @@ private:
     void load_textures();
 
 public:
-    void draw(Gamedata &gamedata);
+    void draw(Gamedata *gamedata);
 
     Viewer();
+    
     ~Viewer();
 };
 

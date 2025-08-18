@@ -12,7 +12,7 @@ private:
     std::map<std::string, bool> last_input_;
 
 public:
-    void update_input(Gamedata &game_data);
+    void update_input(Gamedata *game_data);
     Controller();
 };
 

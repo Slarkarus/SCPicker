@@ -3,4 +3,4 @@
 
 Controller::Controller(){}
 
-void Controller::update_input(Gamedata &gamedata){}
+void Controller::update_input(Gamedata *gamedata){}
