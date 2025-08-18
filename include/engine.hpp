@@ -23,11 +23,11 @@ private:
     Scene current_scene_;
 
     Engine(Controller *controller, Gamedata gamedata, Viewer *viewer) :
-        controller_(controller), gamedata_(gamedata), viewer_(viewer), current_scene_(Scene::Menu) {}
+        controller_(controller), gamedata_(gamedata), viewer_(viewer), current_scene_(Scene::Menu) {
+            SetTargetFPS(60);
+        }
 
     static Engine* engine_;
-
-    void wait_for_step();
     
 public:
     Engine(Engine &other) = delete;
