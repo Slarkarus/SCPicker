@@ -1,6 +1,5 @@
 #include "gamedata.hpp"
 #include <fstream>
-#include <iostream>
 #include <vector>
 
 Gamedata::Gamedata(std::string filename)
@@ -25,7 +24,6 @@ Gamedata::Gamedata(std::string filename)
         for (int j = 0; j < width; ++j)
         {
             fin >> tile_char;
-            std::cout << tile_char;
             switch (tile_char)
             {
             case '#':
@@ -50,7 +48,6 @@ Gamedata::Gamedata(std::string filename)
                 break;
             }
         }
-        std::cout << '\n';
     }
 }
 
