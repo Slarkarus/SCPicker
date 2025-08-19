@@ -55,14 +55,6 @@ Gamedata::Gamedata(std::string filename)
     }
 }
 
-// Методы Entity
-std::pair<double, double> ent::Entity::get_pos() { return {x_pos_, y_pos_}; }
-void ent::Entity::step(Gamedata &gamedata) {}
-
-// Методы наследников
-void ent::SCP_939::step(Gamedata &gamedata) {}
-void ent::Player::step(Gamedata &gamedata) {}
-void ent::Orb::step(Gamedata &gamedata) {}
 
 // Методы Gamedata
 std::vector<std::vector<Tile>> Gamedata::get_map() { return tiles_; }
