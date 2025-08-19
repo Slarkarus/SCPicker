@@ -20,7 +20,7 @@ namespace ent
 
         Direction get_direction() { return direction_; }
 
-        virtual void step(Gamedata &gamedata);
+        virtual void step(Gamedata &gamedata) = 0;
 
         Entity(double x_pos, double y_pos, Direction direction = Direction::Right) : x_pos_(x_pos), y_pos_(y_pos), direction_(direction) {}
     };
