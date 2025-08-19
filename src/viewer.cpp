@@ -1,4 +1,6 @@
 #include "entity/entity.hpp"
+#include "entity/orb.hpp"
+#include "entity/player.hpp"
 #include "gamedata.hpp"
 #include "viewer.hpp"
 #include "raylib.h"
@@ -103,7 +105,20 @@ void Viewer::draw_field_(const std::vector<std::vector<Tile>> &field)
 void Viewer::draw_entities_(const std::vector<ent::Entity *> &enemies, ent::Player *player,
                            const std::vector<ent::Orb *> &orbs)
 {
+    Texture2D entity_texture;
     
+    for (ent::Entity * enemy : enemies) {
+        std::pair<double, double> enemy_pos = enemy->get_pos();
+        draw_element_(enemy_pos.second - 0.5, enemy_pos.first - 0.5, textures_map_["scp_939"]);
+    }
+
+    std::pair<double, double> player_pos = player->get_pos();
+    draw_element_(player_pos.second - 0.5, player_pos.first - 0.5, textures_map_["player"]);
+    
+    for (ent::Orb * orb : orbs) {
+        std::pair<double, double> orb_pos = orb->get_pos();
+        draw_element_(orb_pos.second - 0.5, orb_pos.first - 0.5, textures_map_["orb"]);
+    }
 }
 
 void Viewer::draw(Gamedata *gamedata)
