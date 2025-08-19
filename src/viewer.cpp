@@ -1,3 +1,4 @@
+#include "entity/entity.hpp"
 #include "gamedata.hpp"
 #include "viewer.hpp"
 #include "raylib.h"
@@ -10,7 +11,7 @@ Viewer::Viewer()
     InitWindow(800, 450, "SCP game");
     MaximizeWindow();
 
-    load_textures();
+    load_textures_();
 }
 
 Viewer::~Viewer()
@@ -21,22 +22,20 @@ Viewer::~Viewer()
     }
 }
 
-void Viewer::load_textures()
+void Viewer::load_textures_()
 {
     textures_map_["exit"] = LoadTexture("resources/images/exit.png");
     textures_map_["floor"] = LoadTexture("resources/images/floor.png");
     textures_map_["wall"] = LoadTexture("resources/images/wall.png");
+    textures_map_["player"] = LoadTexture("resources/images/player.png");
+    textures_map_["orb"] = LoadTexture("resources/images/orb.png");
+    textures_map_["scp_939"] = LoadTexture("resources/images/scp_939.png");
 }
 
-void Viewer::draw(Gamedata *gamedata)
+void Viewer::calculate_tile_side_(const std::vector<std::vector<Tile>> &field)
 {
-    BeginDrawing();
-    ClearBackground(RAYWHITE);
-
     int screen_width = GetScreenWidth();
     int screen_height = GetScreenHeight();
-
-    std::vector<std::vector<Tile>> field = gamedata->get_map();
 
     float field_width = field[0].size();
     float field_height = field.size();
@@ -46,17 +45,34 @@ void Viewer::draw(Gamedata *gamedata)
     float tile_width_pixels = tile_width_perc * screen_width;
     float tile_height_pixels = tile_height_perc * screen_height;
 
-    float tile_side_pixels;
-    if (tile_width_pixels <= tile_height_pixels)
-    {
-        tile_side_pixels = tile_width_pixels;
-        tile_height_perc = tile_side_pixels / screen_height;
-    }
-    else
-    {
-        tile_side_pixels = tile_height_pixels;
-        tile_width_perc = tile_side_pixels / screen_width;
-    }
+    tile_side_pixels_ = std::min(tile_width_pixels, tile_height_pixels);
+}
+
+std::pair<float, float> Viewer::get_pixel_pos_(float tile_pos_x, float tile_pos_y)
+{
+    int screen_width = GetScreenWidth();
+    int screen_height = GetScreenHeight();
+
+    float tile_width_perc = tile_side_pixels_ / screen_width;
+    float tile_height_perc = tile_side_pixels_ / screen_height;
+
+    float x_percents = 0.05f + tile_pos_x * tile_width_perc;
+    float y_percents = 0.05f + tile_pos_y * tile_height_perc;
+    return {screen_width * x_percents, screen_height * y_percents};
+}
+
+void Viewer::draw_element_(float tile_pos_x, float tile_pos_y, Texture2D texture) {
+    std::pair<float, float> pixel_coords = get_pixel_pos_(tile_pos_x, tile_pos_y);
+    Rectangle dest = {pixel_coords.first, pixel_coords.second, tile_side_pixels_, tile_side_pixels_};
+    Rectangle src = {0, 0, (float)texture.width, (float)texture.height};
+    Vector2 rotate = {0, 0};
+    DrawTexturePro(texture, src, dest, rotate, 0.0f, WHITE);
+}
+
+void Viewer::draw_field_(const std::vector<std::vector<Tile>> &field)
+{
+    float field_width = field[0].size();
+    float field_height = field.size();
 
     Tile tile;
     for (size_t pos_y = 0; pos_y < field_height; pos_y++)
@@ -79,16 +95,26 @@ void Viewer::draw(Gamedata *gamedata)
                 break;
             }
 
-            float x_percents = 0.05f + pos_x * tile_width_perc;
-            float y_percents = 0.05f + pos_y * tile_height_perc;
-
-            Rectangle dest = {screen_width * x_percents, screen_height * y_percents, tile_side_pixels, tile_side_pixels};
-            Rectangle src = {0, 0, (float)tile_texture.width, (float)tile_texture.height};
-            Vector2 rotate = {0, 0};
-            DrawTexturePro(tile_texture, src, dest, rotate, 0.0f, WHITE);
+            draw_element_(pos_x, pos_y, tile_texture);
         }
     }
-    // ClearBackground(RAYWHITE);
-    // DrawText("Congrats! You created your first resizable window!", 190, 200, 20, LIGHTGRAY);
+}
+
+void Viewer::draw_entities_(const std::vector<ent::Entity *> &enemies, ent::Player *player,
+                           const std::vector<ent::Orb *> &orbs)
+{
+    
+}
+
+void Viewer::draw(Gamedata *gamedata)
+{
+    calculate_tile_side_(gamedata->get_map());
+
+    BeginDrawing();
+    ClearBackground(RAYWHITE);
+
+    draw_field_(gamedata->get_map());
+    draw_entities_(gamedata->get_enemies(), gamedata->get_player(), gamedata->get_orbs());
+
     EndDrawing();
 }
