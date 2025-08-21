@@ -85,11 +85,14 @@ void Gamedata::update_mouse(int mouse_x, int mouse_y, bool is_mouse_pressed, boo
     is_mouse_up_ = is_mouse_up;
 }
 
-void Gamedata::step() {
-    for(ent::Entity* enemy: enemies_){
+void Gamedata::step()
+{
+    for (ent::Entity *enemy : enemies_)
+    {
         enemy->step(this);
     }
-    for(ent::Orb* orb: orbs_){
+    for (ent::Orb *orb : orbs_)
+    {
         orb->step(this);
     }
     player_->step(this);
@@ -104,4 +107,19 @@ Gamedata::~Gamedata()
 
     for (ent::Entity *enemy : enemies_)
         delete enemy;
+}
+
+Event Gamedata::get_last_pressed_direction()
+{
+    return last_pressed_direction_;
+}
+
+std::pair<int, int> Gamedata::get_mouse_pos()
+{
+    return {mouse_x_, mouse_y_};
+}
+
+EventsArray Gamedata::get_events()
+{
+    return events_;
 }

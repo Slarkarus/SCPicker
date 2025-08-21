@@ -41,7 +41,7 @@ private:
 
     std::vector<ent::Orb *> orbs_;
 
-    std::array<bool, static_cast<std::size_t>(Event::CountOfEvents)> events_;
+    EventsArray events_;
 
     int mouse_x_;
     int mouse_y_;
@@ -64,6 +64,12 @@ public:
     void update_event(Event event_name, bool event_value);
 
     void update_mouse(int mouse_x_, int mouse_y_, bool is_mouse_pressed, bool is_mouse_down, bool is_mouse_released, bool is_mouse_up);
+
+    Event get_last_pressed_direction();
+
+    std::pair <int, int> get_mouse_pos();
+
+    EventsArray get_events();
 
     void step();
 
