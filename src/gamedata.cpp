@@ -65,7 +65,14 @@ ent::Player *Gamedata::get_player() { return player_; }
 
 std::vector<ent::Orb *> Gamedata::get_orbs() { return orbs_; }
 
-void Gamedata::update_event(Event event, bool event_value) { events_[static_cast<std::size_t>(event)] = event_value; }
+void Gamedata::update_event(Event event, bool event_value)
+{
+    if (static_cast<std::size_t>(event) < 4)
+    {
+        last_pressed_direction_ = event;
+    }
+    events_[static_cast<std::size_t>(event)] = event_value;
+}
 
 void Gamedata::update_mouse(int mouse_x, int mouse_y, bool is_mouse_pressed, bool is_mouse_down, bool is_mouse_released, bool is_mouse_up)
 {

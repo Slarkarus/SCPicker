@@ -50,6 +50,8 @@ private:
     bool is_mouse_released_;
     bool is_mouse_up_;
 
+    Event last_pressed_direction_;
+
 public:
     std::vector<std::vector<Tile>> get_map();
 
