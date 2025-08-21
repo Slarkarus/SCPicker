@@ -7,7 +7,7 @@
 int main() {
     Controller* controller = new Controller();
     Viewer* viewer = new Viewer();
-    Gamedata* gamedata = new Gamedata("test_map.scpac");
+    Gamedata* gamedata = new Gamedata("original_game_map.scpac");
 
     Engine* engine = Engine::get_instance(controller, gamedata, viewer);
 
