@@ -60,11 +60,11 @@ Gamedata::Gamedata(std::string filename)
 // Методы Gamedata
 std::vector<std::vector<Tile>> Gamedata::get_map() { return tiles_; }
 
-std::vector<ent::Entity *> Gamedata::get_enemies() { return enemies_; }
+std::vector<ent::Entity *>& Gamedata::get_enemies() { return enemies_; }
 
 ent::Player *Gamedata::get_player() { return player_; }
 
-std::vector<ent::Orb *> Gamedata::get_orbs() { return orbs_; }
+std::vector<ent::Orb *>& Gamedata::get_orbs() { return orbs_; }
 
 void Gamedata::update_event(Event event, bool event_value)
 {

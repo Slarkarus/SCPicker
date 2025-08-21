@@ -55,11 +55,11 @@ private:
 public:
     std::vector<std::vector<Tile>> get_map();
 
-    std::vector<ent::Entity *> get_enemies();
+    std::vector<ent::Entity *>& get_enemies();
 
     ent::Player *get_player();
 
-    std::vector<ent::Orb *> get_orbs();
+    std::vector<ent::Orb *>& get_orbs();
 
     void update_event(Event event_name, bool event_value);
 
