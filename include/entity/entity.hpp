@@ -23,6 +23,8 @@ namespace ent
         virtual void step(Gamedata *gamedata) = 0;
 
         Entity(double x_pos, double y_pos, Direction direction = Direction::Right) : x_pos_(x_pos), y_pos_(y_pos), direction_(direction) {}
+
+        Entity *get_collide_entity(std::vector<Entity *> entities);
     };
 };
 
