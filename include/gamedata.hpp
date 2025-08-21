@@ -1,6 +1,12 @@
 #ifndef GAMEDATA_HPP
 #define GAMEDATA_HPP
 
+#include <vector>
+#include <array>
+#include <map>
+#include <string>
+#include "events.hpp"
+
 namespace ent
 {
     class Entity;
@@ -8,10 +14,6 @@ namespace ent
     class Orb;
     class SCP_939;
 }
-
-#include <vector>
-#include <map>
-#include <string>
 
 enum class Tile
 {
@@ -34,10 +36,19 @@ private:
     std::vector<std::vector<Tile>> tiles_;
 
     std::vector<ent::Entity *> enemies_;
+
     ent::Player *player_;
+
     std::vector<ent::Orb *> orbs_;
 
-    std::map<std::string, bool> input_;
+    std::array<bool, static_cast<std::size_t>(Event::CountOfEvents)> events_;
+
+    int mouse_x_;
+    int mouse_y_;
+    bool is_mouse_pressed_;
+    bool is_mouse_down_;
+    bool is_mouse_released_;
+    bool is_mouse_up_;
 
 public:
     std::vector<std::vector<Tile>> get_map();
@@ -48,7 +59,9 @@ public:
 
     std::vector<ent::Orb *> get_orbs();
 
-    void update_input(std::string input_name, bool input_value);
+    void update_event(Event event_name, bool event_value);
+
+    void update_mouse(int mouse_x_, int mouse_y_, bool is_mouse_pressed, bool is_mouse_down, bool is_mouse_released, bool is_mouse_up);
 
     void step();
 
