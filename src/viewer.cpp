@@ -107,6 +107,8 @@ void Viewer::draw_entities_(const std::vector<ent::Entity *> &enemies, ent::Play
 {
     Texture2D entity_texture;
     
+    // TODO: swap coordinates in the right order when they will be swapped in gamedata.cpp constructor
+
     for (ent::Entity * enemy : enemies) {
         std::pair<double, double> enemy_pos = enemy->get_pos();
         draw_element_(enemy_pos.second - 0.5, enemy_pos.first - 0.5, textures_map_["scp_939"]);
