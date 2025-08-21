@@ -3,6 +3,7 @@
 
 #include "gamedata.hpp"
 #include <utility>
+#include <cmath>
 
 namespace ent
 {
@@ -24,8 +25,24 @@ namespace ent
 
         Entity(double x_pos, double y_pos, Direction direction = Direction::Right) : x_pos_(x_pos), y_pos_(y_pos), direction_(direction) {}
 
-        Entity *get_collide_entity(std::vector<Entity *> entities);
+        template <typename T>
+        T *get_collide_entity(std::vector<T *> entities);
     };
 };
+
+template <typename T>
+T *ent::Entity::get_collide_entity(std::vector<T *> entities)
+{
+    for (T *entity : entities)
+    {
+        auto pos = entity->get_pos();
+
+        if (fabs(pos.first - x_pos_) < 0.5 && fabs(pos.second - y_pos_) < 0.5)
+        {
+            return entity;
+        }
+    }
+    return nullptr;
+}
 
 #endif // ENTITY_ENTITY_HPP
