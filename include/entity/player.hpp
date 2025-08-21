@@ -12,7 +12,7 @@ namespace ent
     public:
         using Entity::Entity;
 
-        void step(Gamedata &gamedata);
+        void step(Gamedata *gamedata);
     };
 };
 
