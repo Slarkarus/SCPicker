@@ -41,13 +41,13 @@ Gamedata::Gamedata(std::string filename)
                 tiles_[i][j] = Tile::Exit;
                 break;
             case 'P':
-                player_ = new ent::Player(i + 0.5, j + 0.5);
+                player_ = new ent::Player(j + 0.5, i + 0.5);
                 break;
             case 'E':
-                enemies_.push_back(new ent::SCP_939(i + 0.5, j + 0.5));
+                enemies_.push_back(new ent::SCP_939(j + 0.5, i + 0.5));
                 break;
             case '.':
-                orbs_.push_back(new ent::Orb(i + 0.5, j + 0.5));
+                orbs_.push_back(new ent::Orb(j + 0.5, i + 0.5));
                 break;
             default:
                 throw std::runtime_error("Unknown map symbol\n");
@@ -85,7 +85,15 @@ void Gamedata::update_mouse(int mouse_x, int mouse_y, bool is_mouse_pressed, boo
     is_mouse_up_ = is_mouse_up;
 }
 
-void Gamedata::step() {}
+void Gamedata::step() {
+    for(ent::Entity* enemy: enemies_){
+        enemy->step(this);
+    }
+    for(ent::Orb* orb: orbs_){
+        orb->step(this);
+    }
+    player_->step(this);
+}
 
 Gamedata::~Gamedata()
 {
