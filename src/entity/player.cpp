@@ -6,6 +6,9 @@
 
 #include <iostream>
 #include <cmath>
+#include <cstdlib>
+
+bool is_win = false; // TODO: Burn That WIth Fire
 
 void ent::Player::step(Gamedata *gamedata)
 {
@@ -71,5 +74,14 @@ void ent::Player::step(Gamedata *gamedata)
     ent::Entity* collided_enemy = get_collide_entity(enemies);
     if (collided_enemy) {
         x_pos_ = 10000;
+    }
+
+    if (orbs.empty() && field[current_tile.second][current_tile.first] == Tile::Exit) {
+        is_win = true;
+    }
+
+    if (is_win) {
+        x_pos_ = 1 + std::rand() % (field[0].size() - 2);
+        y_pos_ = 1 + std::rand() % (field.size() - 2);
     }
 }
