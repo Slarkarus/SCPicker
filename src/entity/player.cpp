@@ -1,5 +1,6 @@
 #include "gamedata.hpp"
 #include "entity/player.hpp"
+#include "entity/orb.hpp"
 #include "constants.hpp"
 #include "events.hpp"
 
@@ -60,5 +61,15 @@ void ent::Player::step(Gamedata *gamedata)
             break;
     }
 
-    
+    std::vector<ent::Orb *>& orbs = gamedata->get_orbs();
+    ent::Orb* collided_orb = get_collide_entity(orbs);
+    if (collided_orb) {
+        orbs.erase(std::remove(orbs.begin(), orbs.end(), collided_orb), orbs.end());
+    }
+
+    std::vector<ent::Entity *>& enemies = gamedata->get_enemies();
+    ent::Entity* collided_enemy = get_collide_entity(enemies);
+    if (collided_enemy) {
+        x_pos_ = 10000;
+    }
 }
