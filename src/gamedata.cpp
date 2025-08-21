@@ -7,6 +7,9 @@
 
 #include <fstream>
 #include <vector>
+
+#include <iostream>
+
 Gamedata::Gamedata(std::string filename)
 {
     std::string filepath = "resources/maps/" + filename;
@@ -67,9 +70,10 @@ std::vector<ent::Orb *> Gamedata::get_orbs() { return orbs_; }
 
 void Gamedata::update_event(Event event, bool event_value)
 {
-    if (static_cast<std::size_t>(event) < 4)
+    if (static_cast<std::size_t>(event) < 4 && event_value)
     {
         last_pressed_direction_ = event;
+        std::cout << (int)event << '\n';
     }
     events_[static_cast<std::size_t>(event)] = event_value;
 }
