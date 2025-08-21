@@ -3,6 +3,7 @@
 #include "gamedata.hpp"
 #include "viewer.hpp"
 #include "controller.hpp"
+#include "constants.hpp"
 
 #include <cstdlib>
 #include <ctime>
@@ -12,7 +13,7 @@ int main() {
 
     Controller* controller = new Controller();
     Viewer* viewer = new Viewer();
-    Gamedata* gamedata = new Gamedata("test_map.scpac");
+    Gamedata* gamedata = new Gamedata(MAP_FILENAME);
 
     Engine* engine = Engine::get_instance(controller, gamedata, viewer);
 
