@@ -27,6 +27,10 @@ namespace ent
 
         template <typename T>
         T *get_collide_entity(std::vector<T *> entities);
+
+        void set_pos(double x_pos, double y_pos);
+
+        void set_pos(std::pair<double, double> pos);
     };
 };
 
