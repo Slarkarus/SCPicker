@@ -1,12 +1,18 @@
 #include "gamedata.hpp"
 #include "entity/scp_939.hpp"
+#include "entity/player.hpp"
 #include "constants.hpp"
+#include <cmath>
 
 bool player_is_near(ent::SCP_939 *scp, Gamedata *gamedata)
 {
+    struct std::pair<double, double> scp_pos = scp->get_pos();
+    struct std::pair<double, double> player_pos = gamedata->get_player()->get_pos();
 
-    return true;
+    return fsqrt((scp_pos.first - player_pos.first) * (scp_pos.first - player_pos.first) +
+                 (scp_pos.second - player_pos.second) * (scp_pos.second - player_pos.second)) < SCP_939_HEARING_DISTANCE;
 }
+
 bool able_to_set_path(ent::SCP_939 *scp)
 {
     std::pair<double, double> pos = scp->get_pos();
