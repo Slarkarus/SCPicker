@@ -160,15 +160,17 @@ void set_random_path(ent::SCP_939 *scp, Gamedata *gamedata)
     scp->next_path_ = get_scp_939_path(scp->get_pos(), {(double)x + 0.5, (double)y + 0.5}, gamedata);
 }
 
-void set_pos(ent::SCP_939 *scp, std::vector<std::pair<double, double>> &next_path) {
-    
+void set_next_pos(ent::SCP_939 *scp, std::vector<std::pair<double, double>> next_path)
+{
+    scp->set_pos(next_path.back());
+    next_path.pop_back();
 }
 
 void ent::SCP_939::step(Gamedata *gamedata)
 {
     if (!next_path_.empty())
     {
-        set_pos(this, next_path_);
+        set_next_pos(this, next_path_);
     }
     if (able_to_set_path(this)) // можно поворачивать только в центрах клеток
     {
