@@ -151,7 +151,7 @@ void set_random_path(ent::SCP_939 *scp, Gamedata *gamedata)
     int width = map[0].size();
     int height = map.size();
     int x = -1, y = -1;
-    while (x == -1 || y == -1 || (map[y][x] != Tile::Empty || map[y][x] != Tile::Exit))
+    while (x == -1 || y == -1 || map[y][x] == Tile::Wall)
     {
         x = std::rand() % width;
         y = std::rand() % height;
