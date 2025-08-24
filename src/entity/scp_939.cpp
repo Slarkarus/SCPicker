@@ -1,15 +1,18 @@
 #include "gamedata.hpp"
 #include "entity/scp_939.hpp"
+#include "constants.hpp"
 
 bool player_is_near(ent::SCP_939 *scp, Gamedata *gamedata)
 {
+
     return true;
 }
 bool able_to_set_path(ent::SCP_939 *scp)
 {
-    return false;
+    std::pair<double, double> pos = scp->get_pos();
+    return fabs(pos.first - floor(pos.first) - 0.5) < DOUBLE_EPS && fabs(pos.second - floor(pos.second) - 0.5) < DOUBLE_EPS;
 }
-std::vector <std::pair<double, double>> find_path_centers(std::pair<double, double> a, std::pair<double, double> b);
+std::vector<std::pair<double, double>> find_path_centers(std::pair<double, double> a, std::pair<double, double> b);
 
 void set_path_to_player(ent::SCP_939 *scp, Gamedata *gamedata) {}
 
