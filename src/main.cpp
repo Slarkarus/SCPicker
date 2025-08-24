@@ -1,17 +1,23 @@
 #include "raylib.h"
+#include "engine.hpp"
+#include "gamedata.hpp"
+#include "viewer.hpp"
+#include "controller.hpp"
+#include "constants.hpp"
+
+#include <cstdlib>
+#include <ctime>
 
 int main() {
-    InitWindow(800, 450, "raylib [core] example - basic window");
+    std::srand(std::time(nullptr));
 
-    while (!WindowShouldClose())
-    {
-        BeginDrawing();
-            ClearBackground(RAYWHITE);
-            DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
-        EndDrawing();
-    }
+    Controller* controller = new Controller();
+    Viewer* viewer = new Viewer();
+    Gamedata* gamedata = new Gamedata(MAP_FILENAME);
 
-    CloseWindow();
+    Engine* engine = Engine::get_instance(controller, gamedata, viewer);
+
+    engine->run();
 
     return 0;
 }
