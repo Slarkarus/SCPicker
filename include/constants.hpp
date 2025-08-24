@@ -10,4 +10,6 @@ const std::string MAP_FILENAME = "original_game_map.scpac";
 
 const double SCP_939_HEARING_DISTANCE = 5.0;
 
+const double SCP_939_SPEED = 1.0 / 20.0;
+
 #endif // CONSTANTS_HPP
