@@ -9,8 +9,12 @@ bool able_to_set_path(ent::SCP_939 *scp)
 {
     return false;
 }
+std::vector <std::pair<double, double>> find_path_centers(std::pair<double, double> a, std::pair<double, double> b);
+
 void set_path_to_player(ent::SCP_939 *scp, Gamedata *gamedata) {}
+
 void set_random_path(ent::SCP_939 *scp, Gamedata *gamedata) {}
+
 void set_pos(ent::SCP_939 *scp, std::vector<std::pair<double, double>> &next_path) {}
 
 void ent::SCP_939::step(Gamedata *gamedata)
